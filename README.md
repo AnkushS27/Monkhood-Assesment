@@ -1,5 +1,5 @@
 # Monkhood-Assesment
-Visit the live deployment at: 
+Visit the live deployment at: https://user-web-form.onrender.com/
 
 Web Form Assessment
 This repository contains the source code for the web form assessment developed using Node.js. The assessment requires you to create a web form page where users can input their data multiple times, such as name, phone number, email, profile picture (to be saved only in Firebase), and date of birth (using a date picker). The data should be saved in both local storage and Firebase. Additionally, you are required to create two pages, one for local storage data and the other for Firebase data. The assessment should also include options to delete and edit the data.
@@ -14,11 +14,12 @@ Installation:
 Clone the repository to your local machine:
 git clone https://github.com/your-username/web-form-assessment.git
 Install the required dependencies:
+code:
 npm install
 
 Usage:
 To run the application, use the following command:
-npm start
+node app.js
 This will start the Node.js server, and you can access the web form pages through your browser at http://localhost:3000.
 
 Features:
