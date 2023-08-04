@@ -257,6 +257,19 @@ app.get("/edit/:id", (req, res) => {
   res.render("local", { localUsers, user, userId });
 });
 
+app.delete("/delete/:id", (req, res) => {
+  const userId = req.params.id;
+  const localUsers = readUserData();
+  
+  if (localUsers.length <= userId) {
+    return res.status(404).json({ message: "User not found." });
+  }
+
+  localUsers.splice(userId, 1);
+  writeUserData(localUsers);
+  res.sendStatus(200); // Sending 200 OK response after successful deletion
+});
+
 // Handle edit form submission
 app.post("/edit/:id", (req, res) => {
   const userId = req.params.id;

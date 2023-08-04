@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="/css/firebase.css" />
   </head>
   <body>
+    <div class="buttonsContainer">
+      <button><a href="/firebase">Firebase Storage</a></button>
+      <button><a href="/">Home</a></button>
+      <button><a href="/local">Local Storage</a></button>
+    </div>
     <div class="container">
       <div class="userDetails">
         <h1>Enter User Details to Upload</h1>
@@ -54,13 +59,13 @@
           images.forEach((image) => {
             const card = document.createElement("div");
             card.innerHTML = `
-          <img src="${image.imageUrl}" alt="${image.imageName}" style="width: 270px; padding-top:10px;">
+          <img src="${image.imageUrl}" alt="${image.imageName}" style="width: 270px;">
           <p style="padding: 10px 0; font-size: 18px;">Name: ${image.name}</p>
           <p style="padding: 10px 0; font-size: 18px;">Phone: ${image.phone}</p>
           <p style="padding: 10px 0; font-size: 18px;">Email: ${image.email}</p>
           <p style="padding: 10px 0; font-size: 18px;">DOB: ${image.dob}</p>
-          <button style="width: 100px; background-color: #333; color: #fff; padding: 10px 15px; border: none;" onclick="editImage('${image.id}')">Edit</button>
-          <button style="width: 100px; background-color: #333; color: #fff; padding: 10px 15px; border: none; margin-bottom: 30px" onclick="deleteImage('${image.id}')">Delete</button>
+          <button style="width: 100px; background-color: #333; color: #fff; padding: 10px 15px; border: none; border-radius: 3px;" onclick="editImage('${image.id}')">Edit</button>
+          <button style="width: 100px; background-color: #333; color: #fff; padding: 10px 15px; border: none; border-radius: 3px;" onclick="deleteImage('${image.id}')">Delete</button>
         `;
             imageContainer.appendChild(card);
           });

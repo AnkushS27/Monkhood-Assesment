@@ -4,6 +4,45 @@
     box-sizing: border-box;
 }
 
+.buttonsContainer {
+    position: relative;
+    top: 0;
+    width: 100%;
+    background-color: #292929;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.buttonsContainer button {
+    background-color: #464646;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    min-width: fit-content;
+    margin: 15px 10px;
+}
+
+.buttonsContainer a {
+    text-decoration: none;
+    height: fit-content;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+}
+
+.buttonsContainer button:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@media screen and (max-width: 500px) {
+    .container a {
+        padding: 5px 10px;
+    }
+}
+
 .container {
     position: relative;
     display: flex;
