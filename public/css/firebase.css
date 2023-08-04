@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .userDetails,
+#editModal {
+    padding: 50px 0;
+}
+
+#editModal {
+    background-color: #bebebe;
+    width: 100%;
+    text-align: center;
+}
+
+.container .userDetails form,
+#editModal form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container .userDetails form input,
+#editModal form input {
+    width: 270px;
+    margin: 5px 0;
+    padding: 10px 20px;
+}
+
+.container .userDetails form input[type="file"],
+form input[type="submit"],
+#editModal form input[type="file"],
+.editButtons input[type="button"] {
+    margin: 20px 0;
+}
+
+form input[type="submit"],
+.editButtons input[type="button"] {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    transition: 0.5s ease-in-out;
+}
+
+form input[type="submit"]:hover,
+.editButtons input[type="button"]:hover {
+    transform: scale(1.05);
+}
+
+.editButtons {
+    display: flex;
+    flex-direction: column;
+}
+
+.storedData {
+    text-align: center;
+}
+
+.storedData h2 {
+    margin: 10px 0;
+}
+
+#imageContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+#imageContainer div {
+    text-align: left;
+}

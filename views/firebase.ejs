@@ -1,0 +1,142 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User web Upload</title>
+    <link rel="stylesheet" href="/css/firebase.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="userDetails">
+        <h1>Enter User Details to Upload</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <input type="file" name="image" accept="image/*" />
+          <input type="text" name="name" placeholder="Enter your name" />
+          <input type="tel" name="phone" placeholder="Enter your phone" />
+          <input type="email" name="email" placeholder="Enter your email" />
+          <input type="date" name="dob" />
+          <input type="submit" value="Upload" />
+        </form>
+      </div>
+
+      <div id="editModal" style="display: none">
+        <h2>Edit User Information</h2>
+        <form id="editForm" enctype="multipart/form-data">
+          <input type="file" id="editImage" accept="image/*" />
+          <input type="text" id="editName" placeholder="Enter your name" />
+          <input type="text" id="editPhone" placeholder="Enter your phone" />
+          <input type="email" id="editEmail" placeholder="Enter your email" />
+          <input type="date" id="editDOB" />
+          <div class="editButtons">
+            <input type="button" value="Save" onclick="saveEdit()" />
+            <input type="button" value="Cancel" onclick="cancelEdit()" />
+          </div>
+        </form>
+      </div>
+
+      <div class="storedData">
+        <h2>Saved Data</h2>
+        <div id="imageContainer">
+          <!-- Image cards will be dynamically added here -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Fetch and display the uploaded images from the server
+      fetch("/users") // Updated route to fetch images from the correct Firestore collection
+        .then((response) => response.json())
+        .then((images) => {
+          const imageContainer = document.getElementById("imageContainer");
+
+          images.forEach((image) => {
+            const card = document.createElement("div");
+            card.innerHTML = `
+          <img src="${image.imageUrl}" alt="${image.imageName}" style="width: 270px; padding-top:10px;">
+          <p style="padding: 10px 0; font-size: 18px;">Name: ${image.name}</p>
+          <p style="padding: 10px 0; font-size: 18px;">Phone: ${image.phone}</p>
+          <p style="padding: 10px 0; font-size: 18px;">Email: ${image.email}</p>
+          <p style="padding: 10px 0; font-size: 18px;">DOB: ${image.dob}</p>
+          <button style="width: 100px; background-color: #333; color: #fff; padding: 10px 15px; border: none;" onclick="editImage('${image.id}')">Edit</button>
+          <button style="width: 100px; background-color: #333; color: #fff; padding: 10px 15px; border: none; margin-bottom: 30px" onclick="deleteImage('${image.id}')">Delete</button>
+        `;
+            imageContainer.appendChild(card);
+          });
+        });
+
+      // Edit image
+      function editImage(id) {
+        // Fetch the user information by their ID
+        fetch(`/users/${id}`)
+          .then((response) => response.json())
+          .then((user) => {
+            // Populate the modal form with the user's data
+            document.getElementById("editName").value = user.name;
+            document.getElementById("editPhone").value = user.phone; // New field: phone
+            document.getElementById("editEmail").value = user.email; // New field: email
+            document.getElementById("editDOB").value = user.dob; // New field: dateOfBirth
+
+            // Show the modal dialog
+            document.getElementById("editModal").style.display = "block";
+
+            // Save the user's ID for later use in the saveEdit function
+            document.getElementById("editForm").dataset.userId = id;
+          });
+      }
+
+      // Function to save the edited information
+      function saveEdit() {
+        const userId = document.getElementById("editForm").dataset.userId;
+        const newName = document.getElementById("editName").value;
+        const newPhone = document.getElementById("editPhone").value; // New field: phone
+        const newEmail = document.getElementById("editEmail").value; // New field: email
+        const newDOB = document.getElementById("editDOB").value; // New field: dateOfBirth
+        const newImage = document.getElementById("editImage").files[0];
+
+        // Create a FormData object to send the updated data
+        const formData = new FormData();
+        formData.append("name", newName);
+        formData.append("phone", newPhone); // New field: phone
+        formData.append("email", newEmail); // New field: email
+        formData.append("dob", newDOB); // New field: dateOfBirth
+        if (newImage) {
+          formData.append("image", newImage);
+        }
+
+        // Make a PATCH request to update the user's information
+        fetch(`/users/${userId}`, {
+          method: "PATCH",
+          body: formData,
+        }).then(() => {
+          // Hide the modal dialog
+          document.getElementById("editModal").style.display = "none";
+
+          // Reload the page to reflect the changes
+          window.location.reload();
+        });
+      }
+
+      function cancelEdit() {
+        var editModal = document.getElementById("editModal");
+        editModal.style.display = "none";
+      }
+
+      // Handle image delete
+      function deleteImage(imageId) {
+        console.log("Image ID to delete:", imageId); // Log the image ID for debugging
+
+        if (confirm("Are you sure you want to delete this image?")) {
+          fetch(`/users/${imageId}`, {
+            // Updated route to delete images
+            method: "DELETE",
+          }).then(() => {
+            // Reload the page to reflect the changes
+            window.location.reload();
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

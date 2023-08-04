@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Information Form</title>
+    <link rel="stylesheet" href="/css/local.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="userDetails">
+        <h1>Enter User Details to Upload</h1>
+        <form method="post" action="/add">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your name"
+            required
+          />
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Enter your phone"
+            required
+          />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+          <input type="date" id="dob" name="dob" required />
+          <input type="submit" value="Upload" />
+        </form>
+      </div>
+
+      <div id="editModal">
+        <% if (typeof user !== 'undefined' && typeof userId !== 'undefined') {
+        %>
+        <h2>Edit User Information</h2>
+        <form method="post" action="/edit/<%= userId %>">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value="<%= user.name %>"
+            required
+          /><br />
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value="<%= user.phone %>"
+            required
+          /><br />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value="<%= user.email %>"
+            required
+          /><br />
+          <input
+            type="date"
+            id="dob"
+            name="dob"
+            value="<%= user.dob %>"
+            required
+          /><br />
+          <button type="submit">Update</button>
+          <button style="margin: 10px 0 50px" onclick="cancelEdit()">
+            Cancel
+          </button>
+        </form>
+        <% } %>
+      </div>
+
+      <div class="storedData">
+        <h2>Saved Users</h2>
+        <ul>
+          <% if (Array.isArray(localUsers)) { %> <% localUsers.forEach((user,
+          index) => { %>
+          <li>
+            Name: <%= user.name %> <br />Phone:<%= user.phone %> <br />Email:
+            <%= user.email %> <br />DOB: <%= user.dob %> <br /><br /><a
+              href="/edit/<%= index %>"
+              >Edit</a
+            ><br /><br />
+          </li>
+          <% }) %> <% } %>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      function cancelEdit() {
+        var editModal = document.getElementById("editModal");
+        editModal.style.display = "none";
+      }
+    </script>
+  </body>
+</html>
