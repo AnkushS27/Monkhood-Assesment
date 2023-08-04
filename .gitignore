@@ -13,6 +13,6 @@ node_modules/
 .idea/
 
 # Ignore sensitive information (e.g., API keys, access tokens, passwords)
-.env
+.env/
 secrets.env
 config.json
